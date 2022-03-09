@@ -1,4 +1,5 @@
 # photo_ai
+画像認識モデル作成、モデルを用いたAPIサーバでの判別結果表示
 
 ## Requirement
 - Python 3.7.3
