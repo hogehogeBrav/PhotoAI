@@ -12,6 +12,12 @@
 - fastapi(main.py)
 
 ## How To Use
+- 学習画像を用意する
+```py
+
+
 - 学習モデルの作成
 ```
+python retrain.py --image_dir=resize --output_graph=[保存先] --output_labels=[保存先] --how_many_training_steps [学習回数]
 python retrain.py --image_dir=resize --output_graph=./model/output_graph.pb --output_labels=./model/output_labels.txt --how_many_training_steps 5000
+```
