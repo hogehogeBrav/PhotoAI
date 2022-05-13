@@ -11,3 +11,7 @@
 - pykakasi(photo_get.py)
 - fastapi(main.py)
 
+## How To Use
+- 学習モデルの作成
+```
+python retrain.py --image_dir=resize --output_graph=./model/output_graph.pb --output_labels=./model/output_labels.txt --how_many_training_steps 5000
