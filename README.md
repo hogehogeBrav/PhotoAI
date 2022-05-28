@@ -5,7 +5,7 @@
 - Python 3.7.3
 
 ## Module
-- ~~tensorflow==1.15
+- ~~tensorflow==1.15~~
 - tensorflow==2.9(暫定対応)
 - tensorflow hub
 - iclawler(photo_get.py)
