@@ -134,6 +134,7 @@ import tensorflow_hub as hub
 
 # user
 import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 FLAGS = None
 

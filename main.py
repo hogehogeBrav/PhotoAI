@@ -121,7 +121,8 @@ async def file_name(name: str):
     from fileinput import filename
 
     import numpy as np
-    import tensorflow as tf
+    import tensorflow.compat.v1 as tf
+    tf.disable_v2_behavior()
 
     def load_graph(model_file):
       graph = tf.Graph()
