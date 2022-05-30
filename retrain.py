@@ -992,6 +992,10 @@ def main(_):
   # See https://github.com/tensorflow/tensorflow/issues/3047
   tf.logging.set_verbosity(tf.logging.INFO)
 
+  dir = os.path.join("./" , "model")
+  if not os.path.exists(dir):
+    os.makedirs(dir)
+
   if not FLAGS.image_dir:
     tf.logging.error('Must set flag --image_dir.')
     return -1
@@ -1161,6 +1165,7 @@ def main(_):
 
 
 if __name__ == '__main__':
+
   parser = argparse.ArgumentParser()
   parser.add_argument(
       '--image_dir',
@@ -1171,7 +1176,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--output_graph',
       type=str,
-      default='/tmp/output_graph.pb',
+      default='./model/output_graph.pb',
       help='Where to save the trained graph.'
   )
   parser.add_argument(
@@ -1192,7 +1197,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--output_labels',
       type=str,
-      default='/tmp/output_labels.txt',
+      default='./model/output_labels.txt',
       help='Where to save the trained graph\'s labels.'
   )
   parser.add_argument(
@@ -1333,5 +1338,6 @@ if __name__ == '__main__':
       type=str,
       default='',
       help='Where to save the exported graph.')
+
   FLAGS, unparsed = parser.parse_known_args()
   tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)

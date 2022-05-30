@@ -3,102 +3,16 @@ from fastapi import UploadFile, File
 import shutil
 import uvicorn
 import label_image as pd
+import csv
+import numpy as np
 
 app = FastAPI()
 
-value_list = [
-  'shimaamenbo',
-  'namiamenbo',
-  'kuroooari',
-  'kurokusaari',
-  'muneakaooari',
-  'aoosamushi',
-  'hanmyou',
-  'kabutomushi',
-  'kokabutomushi',
-  'saikabutomushi',
-  'ookamakiri',
-  'harabirokamakiri',
-  'himekamakiri',
-  'gomadarakamikiri',
-  'sirosuzikamikiri',
-  'ruriboshikamikiri',
-  'kusagikamemushi',
-  'nanahoshikinkamemushi',
-  'marukamemushi',
-  'kirigirisu',
-  'kutsuwamushi',
-  'kubikirigisu',
-  'yabukiri',
-  'akaashikuwagata',
-  'ookuwagata',
-  'chibikuwagata',
-  'nokogirikuwagata',
-  'hiratakuwagata',
-  'miyamakuwagata',
-  'enmakoorogi',
-  'kera',
-  'suzumushi',
-  'futahoshikoorogi',
-  'matsumushi',
-  'kanabun',
-  'koaohanamuguri',
-  'koganemushi',
-  'aburazemi',
-  'iwasakikusazemi',
-  'ezozemi',
-  'ezochitchizemi',
-  'kumazemi',
-  'tsukutsukuboushi',
-  'niiniizemi',
-  'higurashi',
-  'minminzemi',
-  'oozoumushi',
-  'yamatotamamushi',
-  'aosujiageha',
-  'agehachou',
-  'oogomadara',
-  'oominoga',
-  'oomurasaki',
-  'karasuageha',
-  'kiageha',
-  'kuroageha',
-  'monkicyou',
-  'monshirocyou',
-  'yamatoshijimi',
-  'yonagunisan',
-  'unmontentou',
-  'kamenokotentou',
-  'kiirotentou',
-  'nanahoshitentou',
-  'namitentou',
-  "aomon'itotonbo",
-  'akiakane',
-  'oniyanma',
-  'ginyanma',
-  'shiokaratonbo',
-  'choutonbo',
-  'hatchoutonbo',
-  'nanafushimodoki',
-  'kawarabatta',
-  'shouryoubatta',
-  'tsuchiinago',
-  'tonosamabatta',
-  'obabotaru',
-  'kuromadobotaru',
-  'genjihotaru',
-  'heikebotaru',
-  'adansonhaetori',
-  'koganegumo',
-  'jorougumo',
-  'chasujihaetori',
-  'misujimaimai',
-  'okadangomushi',
-  'funamushi'
-]
+with open("value_list.csv") as f:
+  for row in csv.reader(f):
+    value_list = row
 
-# if __name__ == "__main__":
-#   uvicorn.run(app, port=8080, host='127.0.0.1') 
+print(value_list)
 
 @app.get('/index')
 def hello_world(name: str):
@@ -115,6 +29,7 @@ def hello_world(name: str):
 
 async def file_name(name: str):
     file_name = f'tmp/{name}'
+    print(value_list)
 
     # label_image.py
     import argparse

@@ -1,5 +1,6 @@
 import os
 import glob
+import csv
 from PIL import Image
 import pykakasi
 
@@ -9,90 +10,11 @@ WIDTH = 256
 HEIGHT = 144
 
 folder_dir = './'
-# value_name = 'アカアシクワガタ'
+result_hepburn = []
+
 value_list = [
-  'カブトムシ',
-  'コカブトムシ',
-  'サイカブトムシ',
-  'アカアシクワガタ',
-  'オオクワガタ',
-  'チビクワガタ',
-  'ノコギリクワガタ',
-  'ヒラタクワガタ',
-  'ミヤマクワガタ',
-  'ゴマダラカミキリ',
-  'ルリボシカミキリ',
-  'カナブン',
-  'コアオハナムグリ',
-  'コガネムシ',
-  'アオオサムシ',
-  'ハンミョウ',
-  'オオゾウムシ',
-  'アオスジアゲハ',
-  'アゲハチョウ',
-  'オオゴマダラ',
-  'オオミノガ',
-  'カラスアゲハ',
-  'キアゲハ',
-  'クロアゲハ',
-  'ヤマトシジミ',
-  'ヨナグニサン',
-  'ウンモンテントウ',
-  'カメノコテントウ',
-  'キイロテントウ',
-  'ナナホシテントウ',
-  'ナミテントウ',
-  'クロオオアリ',
-  'クロクサアリ',
-  'ムネアカオオアリ',
-  'アブラゼミ',
-  'イワサキクサゼミ',
-  'エゾゼミ',
-  'エゾチッチゼミ',
-  'クマゼミ',
-  'ツクツクボウシ',
-  'ニイニイゼミ',
-  'ヒグラシ',
-  'ミンミンゼミ',
-  'アオモンイトトンボ',
-  'アキアカネ',
-  'オニヤンマ',
-  'ギンヤンマ',
-  'シオカラトンボ',
-  'チョウトンボ',
-  'ハッチョウトンボ',
-  'オオカマキリ',
-  'ハラビロカマキリ',
-  'ヒメカマキリ',
-  'ナナフシモドキ',
-  'オバボタル',
-  'クロマドボタル',
-  'ゲンジホタル',
-  'ヘイケボタル',
-  'ショウリョウバッタ',
-  'ツチイナゴ',
-  'トノサマバッタ',
-  'キリギリス',
-  'クツワムシ',
-  'クビキリギス',
-  'ヤブキリ',
-  'エンマコオロギ',
-  'ケラ',
-  'スズムシ',
-  'フタホシコオロギ',
-  'マツムシ',
-  'クサギカメムシ',
-  'ナナホシキンカメムシ',
-  'マルカメムシ',
-  'ナミアメンボ',
-  'シマアメンボ',
-  'アダンソンハエトリ',
-  'コガネグモ',
-  'ジョロウグモ',
-  'チャスジハエトリ',
-  'ミスジマイマイ',
-  'オカダンゴムシ',
-  'フナムシ'
+  'マツダ3',
+  'アクセラ'
 ]
 
 
@@ -100,10 +22,11 @@ def get_photo(folder_dir , value_list):
   for value_name in value_list:
     conv = kakasi.convert(value_name)
     hepburn_name = conv[0]['hepburn']
+    result_hepburn.append(hepburn_name)
     
     from icrawler.builtin import BingImageCrawler
     crawler = BingImageCrawler(storage={"root_dir": os.path.join(folder_dir , value_name)})
-    crawler.crawl(keyword=value_name , max_num=250)
+    crawler.crawl(keyword=value_name , max_num=50)
 
     dir_name = os.path.join(folder_dir , value_name)
     new_dir_name = os.path.join(folder_dir , 'resize/' , hepburn_name)
@@ -116,10 +39,14 @@ def get_photo(folder_dir , value_list):
             print(file)
             #画像の元データを開く
             img = Image.open(os.path.join(dir_name, file))
+            # img = Image.open(os.path.join(dir_name, file)).convert('RGB').save(os.path.join(dir_name, file))
             #画像を2分の1に縮小
             img_resize = img.resize(size=(WIDTH, HEIGHT))
             #縮小した画像を別フォルダに保存
             img_resize.save(os.path.join(new_dir_name, file))
 
+  with open('value_list.csv' , 'w') as f:
+    writer = csv.writer(f,lineterminator="\n")
+    writer.writerow(result_hepburn)
             
 get_photo(folder_dir , value_list)
