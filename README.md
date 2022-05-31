@@ -51,7 +51,8 @@ python retrain.py --image_dir=resize --how_many_training_steps 5000
 ```
 
 ### 画像判定APIの起動
-起動後、index.phpで画像をpostして動作確認可能です
+起動後、index.phpで画像をpostして動作確認可能です  
+*失敗する場合はフォルダのパーミッションを見直す
 
 ```
 python main.py
