@@ -9,7 +9,6 @@ $exif = '';
 $error = [];
 
 if(isset($_POST['submit'])){
-
   if($_FILES['upfile']['error'] > 0){
     $error['file'] = "ファイルエラーです"; //エラー文表示
     $chk = false;
@@ -21,6 +20,9 @@ if(isset($_POST['submit'])){
   }
   if($chk){
     $ext = strtolower(pathinfo($_FILES['upfile']['name'] , PATHINFO_EXTENSION));
+    if(!file_exists('./tmp')){
+      mkdir('./tmp', 0777);
+    }
     move_uploaded_file($_FILES['upfile']['tmp_name'] , './tmp/' . date('YmdHis') . '.' . $ext);
     $exif = @exif_read_data($_FILES['upfile']['name']);
     $url = "http://localhost:8081/predict?name=" .  date('YmdHis') . '.' . $ext;
