@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from fastapi import UploadFile, File
 import shutil
 import uvicorn
-# import label_image as pd
 import csv
 import numpy as np
 
