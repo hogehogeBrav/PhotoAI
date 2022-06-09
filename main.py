@@ -1,5 +1,9 @@
-from fastapi import FastAPI
-from fastapi import UploadFile, File
+import os
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse, ORJSONResponse, RedirectResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from starlette.status import HTTP_302_FOUND
 import shutil
 import uvicorn
 import csv
@@ -11,7 +15,7 @@ with open("value_list.csv") as f:
   for row in csv.reader(f):
     value_list = row
 
-@app.get('/predict')
+@app.post('/predict')
 # async def predict_image(file: UploadFile = File(...)):
     # extension = file.filename.split(".")[-1] in ("jpg", "jpeg", "png")
     # if not extension:
@@ -20,9 +24,24 @@ with open("value_list.csv") as f:
     # with open(path, 'w+b') as buffer:
     #     shutil.copyfileobj(file.file, buffer)
 
-async def file_name(name: str):
-    file_name = f'tmp/{name}'
-    print(value_list)
+async def fileupload_post(request: Request):
+    new_path = "tmp" #フォルダ名
+    if not os.path.exists(new_path): #ディレクトリがない場合、作成
+        os.mkdir(new_path)
+
+    # アップロードされたファイルを保存する
+    form = await request.form()
+    uploadedpath = "./tmp"
+    files = os.listdir(uploadedpath)
+    for formdata in form:
+        uploadfile = form[formdata]
+        path = os.path.join("./tmp", uploadfile.filename)
+        fout = open(path, 'wb')
+        while 1:
+            chunk = await uploadfile.read(100000)
+            if not chunk: break
+            fout.write (chunk)
+        fout.close()
 
     # label_image.py
     import argparse
@@ -122,7 +141,7 @@ async def file_name(name: str):
 
     graph = load_graph(model_file)
     t = read_tensor_from_image_file(
-        file_name,
+        f'tmp/{uploadfile.filename}',
         input_height=input_height,
         input_width=input_width,
         input_mean=input_mean,

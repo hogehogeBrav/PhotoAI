@@ -11,6 +11,7 @@
 - iclawler(photo_get.py)
 - pykakasi(photo_get.py)
 - fastapi(main.py)
+- python-multipart
 
 ## How To Use
 

@@ -20,20 +20,24 @@ if(isset($_POST['submit'])){
   }
   if($chk){
     $ext = strtolower(pathinfo($_FILES['upfile']['name'] , PATHINFO_EXTENSION));
-    if(!file_exists('./tmp')){
-      mkdir('./tmp', 0777);
-    }
-    move_uploaded_file($_FILES['upfile']['tmp_name'] , './tmp/' . date('YmdHis') . '.' . $ext);
     $exif = @exif_read_data($_FILES['upfile']['name']);
-    $url = "http://localhost:8081/predict?name=" .  date('YmdHis') . '.' . $ext;
+    $url = "http://localhost:8081/predict";
   
     // cURLセッションを初期化
     $ch = curl_init();
+
+    $cfile = new CURLFile($_FILES["upfile"]["tmp_name"],'image/jpeg', date('YmdHis') . '.' . $ext);
+    $params = array('image' => $cfile);
+
   
     // オプションを設定
     curl_setopt($ch, CURLOPT_URL, $url); // 取得するURLを指定
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // 実行結果を文字列で返す
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $params );  
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // サーバー証明書の検証を行わない
+  
   
     // URLの情報を取得
     $response =  curl_exec($ch);
