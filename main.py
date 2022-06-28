@@ -168,7 +168,7 @@ async def fileupload_post(request: Request):
       })
     results = np.squeeze(results)
 
-    top_k = results.argsort()[-4:][::-1]
+    top_k = results.argsort()[-5:][::-1]
     labels = load_labels(label_file)
     main = []
     for i in top_k:
@@ -183,4 +183,4 @@ async def fileupload_post(request: Request):
     return main
 
 if __name__ == "__main__":
-    uvicorn.run(app, port=8081, host='127.0.0.1')
+    uvicorn.run(app, port=8081, host='0.0.0.0')
