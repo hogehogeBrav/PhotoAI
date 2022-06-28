@@ -22,9 +22,10 @@
 ```
 
 ### 学習画像を用意する  
-用意したい画像の名前を配列に格納する(get_photo.py)
+用意したい画像の名前を配列に記述する(value.py)
 
 ```python
+# 取得したい画像名を追加...
 value_list = [
   'カブトムシ',
   'コカブトムシ',
@@ -35,7 +36,7 @@ value_list = [
 ]
 ```  
 
-get_photo.pyを実行して画像収集(./resizeが作成され、保存)
+get_photo.pyを実行して画像収集(./photos & ./resizeが作成され、保存)
 
 ```
 python get_photo.py
