@@ -6,7 +6,7 @@
 
 ## Module
 - ~~tensorflow==1.15~~
-- tensorflow==2.9(暫定対応)
+- tensorflow==2.9(多分いける)
 - tensorflow hub
 - iclawler(photo_get.py)
 - pykakasi(photo_get.py)
